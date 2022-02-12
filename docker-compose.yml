@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    container_name: next-app
+    hostname: next-app
+    image: node:alpine
+    platform: linux/arm64
+    working_dir: /app
+    tty: true
+    volumes:
+      - ./:/app
+    ports:
+      - 3000:3000
+      - 3333:3333
