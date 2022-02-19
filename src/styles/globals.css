@@ -25,3 +25,42 @@ main {
   padding-top: 30px;
   padding-bottom: 80px;
 }
+
+h1 {
+  margin-bottom: 40px;
+}
+
+img {
+  max-width: 100%;
+}
+
+.recipes-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 40px;
+  list-style: none;
+  padding: 0;
+}
+
+.recipe-card a {
+  display: block;
+  height: 100%;
+  text-decoration: none;
+  color: #444;
+  font-size: 22px;
+}
+
+.recipe-card img {
+  display: block;
+  height: 300px;
+  object-fit: cover;
+  margin-bottom: 12px;
+  border: 0.5px solid #444;
+}
+
+.recipe h1 {
+  font-size: 48px;
+  font-weight: bolder;
+  color: #000;
+  margin-bottom: 15px;
+}
