@@ -15,7 +15,8 @@ const recipeQuery = `*[_type == "recipe" && slug.current == $slug][0]{
       name
     }
   },
-  instructions
+  instructions,
+  likes
 }`;
 
 type Props = {
@@ -25,6 +26,7 @@ type Props = {
 };
 
 type Recipe = {
+  _id: string;
   name: string;
   mainImage: string;
   ingredient: {
@@ -37,13 +39,28 @@ type Recipe = {
     };
   }[];
   instructions: string;
+  likes: number;
 }
 
 const OneRecipe: React.FC<Props> = ({ data }) => {
   const { recipe } = data;
+  const [likes, setLikes] = React.useState<number>(recipe?.likes);
+  console.log(recipe);
+  const addLike = async () => {
+    const res = await fetch("/api/handle-like", {
+      method: "POST",
+      body: JSON.stringify({ _id: recipe._id }),
+    });
+    const data = await res.json();
+    setLikes(data.likes);
+  };
+
   return (
     <article className='recipe'>
       <h1>{recipe.name}</h1>
+      <button className='like-button' onClick={addLike}>
+        {likes} ♡
+      </button>
       <main className='content'>
         <img src={urlFor(recipe?.mainImage).url()} alt={recipe.name} />
         <div className='breakdown'>

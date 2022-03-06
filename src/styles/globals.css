@@ -96,3 +96,16 @@ img {
 .instructions {
   padding: 15px;
 }
+
+.like-button {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  outline: none;
+  background: none;
+  border-radius: 5px;
+  border: 1px solid #444;
+  padding: 6px 12px;
+  margin-bottom: 40px;
+  cursor: pointer;
+}
