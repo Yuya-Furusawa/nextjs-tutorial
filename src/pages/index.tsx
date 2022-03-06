@@ -10,7 +10,9 @@ type Props = {
 type Recipes = {
   _id: string,
   name: string,
-  slug: string,
+  slug: {
+    current: string
+  },
   mainImage: string,
 }
 
@@ -27,7 +29,7 @@ const Home: React.FC<Props> = ({ recipes }) => (
       {recipes?.length > 0 &&
         recipes.map((recipe) => (
           <li key={recipe._id} className='recipe-card'>
-            <Link href="/">
+            <Link href={`/recipes/${recipe.slug.current}`}>
               <a>
                 <img src={urlFor(recipe.mainImage).url()} alt={recipe.name} />
                 <span>{recipe.name}</span>
