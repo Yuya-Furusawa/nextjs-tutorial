@@ -22,12 +22,16 @@ const recipeQuery = `*[_type == "recipe" && slug.current == $slug][0]{
 type Props = {
   data: {
     recipe: Recipe;
-  }
+  };
+  preview: boolean;
 };
 
 type Recipe = {
   _id: string;
   name: string;
+  slug: {
+    current: string;
+  };
   mainImage: string;
   ingredient: {
     _key: string;
@@ -42,10 +46,14 @@ type Recipe = {
   likes: number;
 }
 
-const OneRecipe: React.FC<Props> = ({ data }) => {
-  const { recipe } = data;
+const OneRecipe: React.FC<Props> = ({ data, preview }) => {
+  if (!data) return <div>Loading...</div>;
+  const { data: { recipe } } = usePreviewSubscription(recipeQuery, {
+    params: { slug: data.recipe?.slug.current },
+    initialData: data,
+    enabled: preview,
+  })
   const [likes, setLikes] = React.useState<number>(recipe?.likes);
-  console.log(recipe);
   const addLike = async () => {
     const res = await fetch("/api/handle-like", {
       method: "POST",
@@ -100,7 +108,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug } = params;
   const recipe = await sanityClient.fetch(recipeQuery, { slug });
   return {
-    props: { data: { recipe } }
+    props: {
+      data: { recipe },
+      preview: true,
+    }
   }
 };
 
